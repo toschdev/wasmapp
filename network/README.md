@@ -1,6 +1,6 @@
-## **Install Go and Cosmovisor**
+## **Install Go**
 
-Feel free to skip this step if you already have Go and Cosmovisor.
+Feel free to skip this step if you already have Go.
 
 ### **Install Go**
 
