@@ -1,0 +1,17 @@
+syntax = "proto3";
+package wasmapp.wasmapp;
+
+import "amino/amino.proto";
+import "gogoproto/gogo.proto";
+import "wasmapp/wasmapp/params.proto";
+
+option go_package = "wasmapp/x/wasmapp/types";
+
+// GenesisState defines the wasmapp module's genesis state.
+message GenesisState {
+  // params defines all the parameters of the module.
+  Params params = 1 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true
+  ];
+}
