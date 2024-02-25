@@ -31,7 +31,6 @@ Install the current version of node binary.
 ```
 git clone https://github.com/toschdev/wasmapp wasmapp
 cd wasmapp
-git checkout v0.1.0
 make install
 ```
 
@@ -57,7 +56,7 @@ mv genesis.json ~/.wasmapp/config
 Using a seed node to bootstrap is the best practice.
 
 ```
-sed -i 's/seeds = ""/seeds = "ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@seeds.polkachu.com:15156"/' ~/.axelar/config/config.toml
+sed -i 's/seeds = ""/seeds = "a33581756fdcdfc15715090436084431894b7f0a@65.109.102.149:26656"/' ~/.wasmapp/config/config.toml
 
 ```
 
