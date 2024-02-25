@@ -2,11 +2,11 @@ version: 1
 accounts:
 - name: alice
   coins:
-  - 20000token
+  - 20000000000uwasm
   - 200000000ustake
 - name: bob
   coins:
-  - 10000token
+  - 20000000000uwasm
   - 100000000ustake
 client:
   openapi:
@@ -14,7 +14,7 @@ client:
 faucet:
   name: bob
   coins:
-  - 5token
+  - 200000000uwasm
   - 100000ustake
 validators:
 - name: alice
@@ -36,8 +36,8 @@ genesis:
     gov:
       deposit_params:
         min_deposit:
-          - denom: "ustake"
-            amount: "10000000"
+          - denom: "uwasm"
+            amount: "10000"
     bank:
       denom_metadata: 
         - description: Stake token.
@@ -52,3 +52,15 @@ genesis:
           display: stake
           name: stake
           symbol: stake
+        - description: Wasm token.
+          denom_units: 
+            - denom: uwasm
+              exponent: "0"
+              aliases:
+                - microwasm
+            - denom: wasm
+              exponent: "6"
+          base: uwasm
+          display: wasm
+          name: wasm
+          symbol: wasm
