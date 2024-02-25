@@ -3,11 +3,11 @@ accounts:
 - name: alice
   coins:
   - 20000token
-  - 200000000stake
+  - 200000000ustake
 - name: bob
   coins:
   - 10000token
-  - 100000000stake
+  - 100000000ustake
 client:
   openapi:
     path: docs/static/openapi.yml
@@ -15,7 +15,40 @@ faucet:
   name: bob
   coins:
   - 5token
-  - 100000stake
+  - 100000ustake
 validators:
 - name: alice
-  bonded: 100000000stake
+  bonded: 100000000ustake
+  config:
+      consensus:
+        timeout_commit: '6s'
+genesis:
+  app_state:
+    staking:
+      params:
+        bond_denom: "ustake"
+    crisis:
+      constant_fee:
+        denom: "ustake"
+    mint:
+      params:
+        mint_denom: "ustake"
+    gov:
+      deposit_params:
+        min_deposit:
+          - denom: "ustake"
+            amount: "10000000"
+    bank:
+      denom_metadata: 
+        - description: Stake token.
+          denom_units: 
+            - denom: ustake
+              exponent: "0"
+              aliases:
+                - microstake
+            - denom: stake
+              exponent: "6"
+          base: ustake
+          display: stake
+          name: stake
+          symbol: stake
