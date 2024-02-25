@@ -1,51 +1,99 @@
 # wasmapp
 **wasmapp** is a blockchain built using Cosmos SDK and Tendermint and created with [Ignite CLI](https://ignite.com/cli).
 
-## Get started
+Welcome to the **`wasmapp`** repository, a blockchain application scaffolded with Ignite CLI and enhanced with the Ignite app for Wasm integration. This repository showcases a Cosmos-SDK blockchain project, version 0.50.4, integrating Wasm for smart contracts functionality.
 
-```
-ignite chain serve
-```
+## **Getting Started**
 
-`serve` command installs dependencies, builds, initializes, and starts your blockchain in development.
+### **Prerequisites**
 
-### Configure
+- Go 1.21.6
+- Node (latest version)
 
-Your blockchain in development can be configured with `config.yml`. To learn more, see the [Ignite CLI docs](https://docs.ignite.com).
+### **Installation**
 
-### Web Frontend
+### Install Node
 
-Additionally, Ignite CLI offers both Vue and React options for frontend scaffolding:
+Install the current version of the node binary. Clone the repository and install the **`wasmapp`**:
 
-For a Vue frontend, use: `ignite scaffold vue`
-For a React frontend, use: `ignite scaffold react`
-These commands can be run within your scaffolded blockchain project. 
-
-
-For more information see the [monorepo for Ignite front-end development](https://github.com/ignite/web).
-
-## Release
-To release a new version of your blockchain, create and push a new tag with `v` prefix. A new draft release with the configured targets will be created.
-
-```
-git tag v0.1
-git push origin v0.1
+```bash
+git clone https://github.com/toschdev/wasmapp wasmapp
+cd wasmapp
+make install
 ```
 
-After a draft release is created, make your final changes from the release page and publish it.
+### **Configure Node for wasmapp Testnet**
 
-### Install
-To install the latest version of your blockchain node's binary, execute the following command on your machine:
+### Initialize Node
+
+Replace **`YOUR_MONIKER`** with your own moniker:
+
+```bash
+wasmappd init YOUR_MONIKER --chain-id wasmapp
+```
+
+### Download Genesis
+
+```bash
+wget -O genesis.json https://raw.githubusercontent.com/toschdev/wasmapp/main/network/genesis.json
+mv genesis.json ~/.wasmapp/config
+```
+
+### Configure Seed Node
+
+Use a seed node to bootstrap:
+
+```bash
+sed -i 's/seeds = ""/seeds = "a33581756fdcdfc15715090436084431894b7f0a@65.109.102.149:26656"/' ~/.wasmapp/config/config.toml
+```
+
+### **Launch Node**
+
+### Create Service File
+
+Create a **`wasmapp.service`** file in the **`/etc/systemd/system`** folder. Replace **`USER`** with your Linux username:
 
 ```
-curl https://get.ignite.com/username/wasmapp@latest! | sudo bash
+[Unit]
+Description="wasmapp node"
+After=network-online.target
+
+[Service]
+User=USER
+ExecStart=/home/USER/go/bin/wasmappd start
+Restart=always
+RestartSec=3
+LimitNOFILE=4096
+
+[Install]
+WantedBy=multi-user.target
 ```
-`username/wasmapp` should match the `username` and `repo_name` of the Github repository to which the source code was pushed. Learn more about [the install process](https://github.com/allinbits/starport-installer).
 
-## Learn more
+### Start Node Service
 
-- [Ignite CLI](https://ignite.com/cli)
-- [Tutorials](https://docs.ignite.com/guide)
-- [Ignite CLI docs](https://docs.ignite.com)
-- [Cosmos SDK docs](https://docs.cosmos.network)
-- [Developer Chat](https://discord.gg/ignite)
+Enable and start the service:
+
+```bash
+# Enable service
+sudo systemctl enable wasmapp.service
+
+# Start service
+sudo service wasmapp start
+
+# Check logs
+sudo journalctl -fu wasmapp
+```
+
+## **Development and Network Connection**
+
+Connect your development environment using the open DNS links provided:
+
+- **API**: https://api-wasmapp.toschdev.com/
+- **RPC**: https://rpc-wasmapp.toschdev.com/
+- **GRPC**: https://grpc-wasmapp.toschdev.com/
+
+For network details and genesis file, visit: [Network Details & Genesis](https://github.com/toschdev/wasmapp/tree/main/network)
+
+## **Contributing**
+
+Contributions are welcome! Please see the repository's issues for current tasks or submit your suggestions.
